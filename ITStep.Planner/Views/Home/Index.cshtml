@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ITStep.Planner.Models.Entities.Project> 
+
+@{
+    ViewData["Title"] = "Welcome to \"Planner\"";
+}
+<a asp-controller="Projects" asp-action="Create">Crete new project</a>
+<div class="container">
+    <h1 class="display-4">List of your projects</h1>
+    <div class="list-group">
+        @foreach (var project in @Model)
+        {
+            <a asp-controller="Projects" asp-action="Jobs" asp-route-id="@project.Id" 
+               class="list-group-item list-group-item-action">@project.Title | @project.Description</a>    
+        }
+    </div>
+</div>
