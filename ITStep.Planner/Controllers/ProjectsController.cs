@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ITStep.Planner.Contexts;
 using ITStep.Planner.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,8 @@ namespace ITStep.Planner.Controllers
             ViewBag.Users = users;
             return View(project);
         }
-
+        
+        [Authorize(Roles="admin")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -40,6 +42,7 @@ namespace ITStep.Planner.Controllers
             return View(project);
         }
 
+        [Authorize(Roles="admin")]
         [HttpPost]
         public async Task<IActionResult> Create(Project project)
         {

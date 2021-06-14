@@ -3,7 +3,11 @@
 @{
     ViewData["Title"] = "Welcome to \"Planner\"";
 }
+
+@if (User.IsInRole("admin"))
+{
 <a asp-controller="Projects" asp-action="Create">Crete new project</a>
+}
 <div class="container">
     <h1 class="display-4">List of your projects</h1>
     <div class="list-group">

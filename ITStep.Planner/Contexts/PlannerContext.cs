@@ -61,7 +61,7 @@ namespace ITStep.Planner.Contexts
             if (!builder.IsConfigured)
             {
                 builder.UseSqlServer("Server=tcp:itstep-database-server.database.windows.net,1433;" +
-                                     "Initial Catalog=itstep-planner;Persist Security Info=False;" +
+                                     "Initial Catalog=itstep-nightspace-planner;Persist Security Info=False;" +
                                      "User ID=itstep-admin;Password=!CthdthysqCthdth7;" +
                                      "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;" +
                                      "Connection Timeout=30;");
