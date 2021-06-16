@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITStep.Planner.Contexts;
@@ -24,12 +25,15 @@ namespace ITStep.Planner.Controllers
         [HttpGet]
         public async Task<IActionResult> Jobs(string projectId)
         {
-            var project = await _context.Projects
-                .Include(x => x.Jobs)
-                .FirstOrDefaultAsync(x => x.Id == Guid.Parse(projectId));
-            var users = await _userManager.Users.ToListAsync();
-            ViewBag.Users = users;
-            return View(project);
+            var projects = new List<Project>();
+            var project = new Project();
+            project.Description = "Тут будет описание";
+            project.Title = "NightSpace";
+            project.Jobs = new List<Job>();
+            project.Jobs.Add(new Job{JobTypeId = Guid.NewGuid(), ProjectId = Guid.NewGuid(),Title = "NightSpace", 
+            Description = "Text432fjkddjkgjhjk", JobStatusId = Guid.NewGuid(), AuthorId = Guid.NewGuid(), JobStatus = new JobStatus{ Title = "В процессе"}});
+            projects.Add(project);
+            return View(projects);
         }
         
         [Authorize(Roles="admin")]
