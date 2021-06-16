@@ -35,7 +35,7 @@ namespace ITStep.Planner.Controllers
           foreach (int s in selectedStatus) coint++;
           return View(coint);
         }
-     
+       
         [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Back(string projectId)
@@ -49,7 +49,7 @@ namespace ITStep.Planner.Controllers
           foreach (int s in selectedBack) coint++;
           return View(coint);
         }
-
+       
         [HttpGet]
         public async Task<IActionResult> Jobs(string projectId)
         {
