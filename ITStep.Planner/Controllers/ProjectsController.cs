@@ -58,10 +58,19 @@ namespace ITStep.Planner.Controllers
             project.Description = "Тут будет описание";
             project.Title = "NightSpace";
             project.Jobs = new List<Job>();
+            project.Author = new ApplicationUser{Name = "Uximy", Lastname = "lastname", Email = "uximy6553@gmail.com"};
             project.Jobs.Add(new Job{JobTypeId = Guid.NewGuid(), ProjectId = Guid.NewGuid(),Title = "NightSpace", 
-            Description = "Text432fjkddjkgjhjk", JobStatusId = Guid.NewGuid(), AuthorId = Guid.NewGuid(), JobStatus = new JobStatus{ Title = "В процессе"}});
+            Description = "Text432fjk", JobStatusId = Guid.NewGuid(), AuthorId = Guid.NewGuid(), JobStatus = new JobStatus{ Title = "В процессе"}});
             projects.Add(project);
+
             return View(projects);
+
+            // var project = await _context.Projects
+            // .Include(x => x.Jobs)
+            // .FirstOrDefaultAsync(x => x.Id == Guid.Parse(projectId));
+            // var users = await _userManager.Users.ToListAsync();
+            // ViewBag.Users = users;
+            // return View(project);
         }
 
         [Authorize(Roles = "admin")]
