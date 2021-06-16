@@ -21,6 +21,33 @@ namespace ITStep.Planner.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public async Task<IActionResult> Ready(string projectId)
+        {
+          int coint = 0;
+          var selectedStatus = (await _context.Jobs
+                  .Include(x => x.JobStatus)
+                  .Where(x => x.JobStatus.ToString() == "Готова")
+                  .FirstOrDefaultAsync(x => x.Id == Guid.Parse(projectId))).ToString();
+          foreach (int s in selectedStatus) coint++;
+          return View(coint);
+        }
+     
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public async Task<IActionResult> Back(string projectId)
+        {
+          int coint = 0;
+          DateTime dt2 = DateTime.Now;
+          var selectedBack = (await _context.Jobs
+                    .Include(x => x.JobStatus)
+                    .Where(x => x.Deadline <= dt2)
+                    .FirstOrDefaultAsync(x => x.Id == Guid.Parse(projectId))).ToString();
+          foreach (int s in selectedBack) coint++;
+          return View(coint);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Jobs(string projectId)
         {
