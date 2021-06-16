@@ -78,6 +78,8 @@ namespace ITStep.Planner.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Project project)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            project.AuthorId = user.Id;
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
