@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITStep.Planner.Contexts;
+using ITStep.Planner.Models;
 using ITStep.Planner.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -35,8 +36,8 @@ namespace ITStep.Planner.Controllers
             projects.Add(project);
             return View(projects);
         }
-        
-        [Authorize(Roles="admin")]
+
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -46,7 +47,7 @@ namespace ITStep.Planner.Controllers
             return View(project);
         }
 
-        [Authorize(Roles="admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create(Project project)
         {
@@ -54,5 +55,48 @@ namespace ITStep.Planner.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var project = await _context.Projects.FindAsync(id);
+            //var project = await _context.FindByIdAsync(id);
+            if (project is null) return NotFound();
+            var model = new EditProjectRequest { Id = project.Id, Title = project.Title, Description = project.Description };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProjectRequest model)
+        {
+            if (ModelState.IsValid)
+            {
+                var project = await _context.FindAsync<Project>(model.Id.ToString());
+                if (project is not null)
+                {
+                    project.Title = model.Title;
+                    project.Description = model.Description;
+                    _context.Projects.Update(project);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var project = await _context.Projects.FindAsync(id);
+            if (project is not null)
+            {
+                _context.Projects.Remove(project);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
