@@ -22,7 +22,7 @@ namespace ITStep.Planner.Controllers
             _context = context;
             _userManager = userManager;
         }
-
+            
         [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Ready(string projectId)
