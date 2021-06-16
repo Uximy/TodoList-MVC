@@ -1,2 +1,35 @@
-﻿@model ITStep.Planner.Models.Entities.Project
+﻿@model IEnumerable<ITStep.Planner.Models.Entities.Project>
 
+@{
+    ViewData["Title"] = "List of your \"projects\"";
+}
+
+@if (User.IsInRole("admin"))
+{
+<div class="container">
+    <h1 class="display-4">List of your projects</h1>
+    <div class="list-group">
+        <ul class="collapsible">
+        @foreach (var project in @Model)
+        {
+            <li>                 
+            <div asp-controller="Projects" asp-action="Jobs" asp-route-id="@project.Id" 
+            class="list-group-item list-group-item-action collapsible-header">
+            @project.Title | @project.Description
+            @* <span class="new blue badge" data-badge-caption="Автор проекта: ">@project.Author.Email</span> *@
+            </div>
+             @foreach (var Job in project.Jobs)
+               {
+                <div asp-controller="Projects" asp-action="Jobs" asp-route-id="@project.Id" 
+                    class="list-group-item list-group-item-action collapsible-body">
+                    @Job.Title | @Job.Description
+                    <span class="new green badge" data-badge-caption="Статус: ">@Job.JobStatus.Title</span>
+                    <span class="new red badge" data-badge-caption="Дедлайн проекта: ">@Job.Deadline</span>
+                    </div> 
+               }    
+             </li>  
+        }
+        </ul>
+    </div>
+</div>
+}

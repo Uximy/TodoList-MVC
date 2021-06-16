@@ -69,3 +69,27 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.btn-login{
+  margin-right: 10px !important;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked{
+  position: relative !important;
+  opacity: 1 !important;
+  pointer-events: none;
+}
+
+span.badge[data-badge-caption]::before{
+  content: " " attr(data-badge-caption);
+}
+
+span.badge[data-badge-caption]::after{
+  content: " " !important;
+  display: none;
+}
+
+.collapsible span.badge{
+  margin-left: 14px !important;
+}
