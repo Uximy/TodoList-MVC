@@ -53,15 +53,19 @@ namespace ITStep.Planner.Controllers
         [HttpGet]
         public async Task<IActionResult> Jobs(string projectId)
         {
-            var projects = new List<Project>();
-            var project = new Project();
-            project.Description = "Тут будет описание";
-            project.Title = "NightSpace";
-            project.Jobs = new List<Job>();
-            project.Jobs.Add(new Job{JobTypeId = Guid.NewGuid(), ProjectId = Guid.NewGuid(),Title = "NightSpace", 
-            Description = "Text432fjkddjkgjhjk", JobStatusId = Guid.NewGuid(), AuthorId = Guid.NewGuid(), JobStatus = new JobStatus{ Title = "В процессе"}});
-            projects.Add(project);
-            return View(projects);
+            var project = _context.Projects.FindAsync(projectId);
+            //var projects = new List<Project>();
+            //var project = new Project();
+            //project.Description = "Тут будет описание";
+            //project.Title = "NightSpace";
+            //project.Jobs = new List<Job>();
+            //project.Jobs.Add(new Job{JobTypeId = Guid.NewGuid(), ProjectId = Guid.NewGuid(),Title = "NightSpace", 
+            //Description = "Text432fjkddjkgjhjk", JobStatusId = Guid.NewGuid(), AuthorId = Guid.NewGuid(), JobStatus = new JobStatus{ Title = "В процессе"}});
+            //projects.Add(project);
+            return View(project);
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var projects = user.OwnedProjects;
         }
 
         [Authorize(Roles = "admin")]
