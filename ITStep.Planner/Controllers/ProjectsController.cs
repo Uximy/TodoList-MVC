@@ -51,7 +51,7 @@ namespace ITStep.Planner.Controllers
         }
        
         [HttpGet]
-        public async Task<IActionResult> Jobs(string projectId)
+        public async Task<IActionResult> Jobs()
         {
             var projects = new List<Project>();
             var project = new Project();
@@ -65,12 +65,12 @@ namespace ITStep.Planner.Controllers
 
             return View(projects);
 
-            // var project = await _context.Projects
-            // .Include(x => x.Jobs)
-            // .FirstOrDefaultAsync(x => x.Id == Guid.Parse(projectId));
+            // var user = await _userManager.GetUserAsync(HttpContext.User);
+            // var projects = user.ParticipateProjects;
+            
             // var users = await _userManager.Users.ToListAsync();
             // ViewBag.Users = users;
-            // return View(project);
+            // return View(projects);
         }
 
         [Authorize(Roles = "admin")]

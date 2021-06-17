@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create new \"Project\"";
 }
 
-<link rel="stylesheet" href="~/css/my-style">
+@* <link rel="stylesheet" href="~/css/my-style"> *@
 
 <h2>Create new Project</h2>
 <form method="post" asp-controller="Projects" asp-action="Create" class="form-group">
@@ -17,11 +17,6 @@
         <label asp-for="Description"></label><br/>
         <input asp-for="Description" name="Description" class="form-control"/>
         <span asp-validation-for="Description"></span>
-    </div>
-        <div>
-        <label asp-for="AuthorId"></label><br/>
-        <input asp-for="AuthorId" name="AuthorId" class="form-control"/>
-        <span asp-validation-for="AuthorId"></span>
     </div>
     <div>
         <input type="submit" value="Create new Project"/>
