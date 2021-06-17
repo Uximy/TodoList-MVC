@@ -51,26 +51,32 @@ namespace ITStep.Planner.Controllers
         }
        
         [HttpGet]
-        public async Task<IActionResult> Jobs()
+        public async Task<IActionResult> Jobs(string projectId)
         {
+            // var projects = new List<Project>();
+            // var project = new Project();
+            // project.Description = "Тут будет описание";
+            // project.Title = "NightSpace";
+            // project.Jobs = new List<Job>();
+            // project.Author = new ApplicationUser{Name = "Uximy", Lastname = "lastname", Email = "uximy6553@gmail.com"};
+            // project.Jobs.Add(new Job{JobTypeId = Guid.NewGuid(), ProjectId = Guid.NewGuid(),Title = "NightSpace", 
+            // Description = "Text432fjk", JobStatusId = Guid.NewGuid(), AuthorId = Guid.NewGuid(), JobStatus = new JobStatus{ Title = "В процессе"}});
+            // projects.Add(project);
+
+            // return View(projects);
+
+    
             var projects = new List<Project>();
-            var project = new Project();
-            project.Description = "Тут будет описание";
-            project.Title = "NightSpace";
-            project.Jobs = new List<Job>();
-            project.Author = new ApplicationUser{Name = "Uximy", Lastname = "lastname", Email = "uximy6553@gmail.com"};
-            project.Jobs.Add(new Job{JobTypeId = Guid.NewGuid(), ProjectId = Guid.NewGuid(),Title = "NightSpace", 
-            Description = "Text432fjk", JobStatusId = Guid.NewGuid(), AuthorId = Guid.NewGuid(), JobStatus = new JobStatus{ Title = "В процессе"}});
+            var project = await _context.Projects
+                .Include(x => x.Jobs)
+                .Where(x => x.Id != null)
+                .FirstOrDefaultAsync(x => x.Id == Guid.Parse(projectId)); 
+            var users = await _userManager.Users.ToListAsync();
+            ViewBag.Users = users;
+
             projects.Add(project);
 
             return View(projects);
-
-            // var user = await _userManager.GetUserAsync(HttpContext.User);
-            // var projects = user.ParticipateProjects;
-            
-            // var users = await _userManager.Users.ToListAsync();
-            // ViewBag.Users = users;
-            // return View(projects);
         }
 
         [Authorize(Roles = "admin")]

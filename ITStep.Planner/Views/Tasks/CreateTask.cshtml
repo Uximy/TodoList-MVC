@@ -1,0 +1,22 @@
+@model ITStep.Planner.Models.Entities.Job
+
+@{
+    ViewData["Title"] = "Create \"Task\"";
+}
+
+<h2>Create Task</h2>
+<form method="post" asp-controller="Tasks" asp-action="CreateTask" class="form-group">
+    <div>
+        <label asp-for="Title"></label><br/>
+        <input asp-for="Title" name="Title" class="form-control"/>
+        <span asp-validation-for="Title"></span>
+    </div>
+    <div>
+        <label asp-for="Description"></label><br/>
+        <input asp-for="Description" name="Description" class="form-control"/>
+        <span asp-validation-for="Description"></span>
+    </div>
+    <div>
+        <input type="submit" value="Create Task"/>
+    </div>
+</form>

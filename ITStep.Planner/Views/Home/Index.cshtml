@@ -9,13 +9,31 @@
 <a asp-controller="Projects" asp-action="Create">Crete new project</a>
 }
 
+@if (User.IsInRole("admin"))
+{
 <div class="container">
     <h1 class="display-4">List of your projects</h1>
-    <div class="list-group">
         @foreach (var project in @Model)
         {
+             <div>
+                <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Меню Task</a>
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li><a asp-controller="Tasks" asp-action="CreateTask">Jobs</a></li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li><a href="#!">Редактировать Task</a></li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li><a href="#!">Удалить Task</a></li>
+                    <li class="divider" tabindex="-1"></li>
+                </ul>
+            </div>      
             <a asp-controller="Projects" asp-action="Jobs" asp-route-id="@project.Id" 
-               class="list-group-item list-group-item-action">@project.Title | @project.Description</a>    
+            class="list-group-item list-group-item-action collapsible-header">
+            <div class="usestyle">
+                <span class="card-title">Название: @project.Title</span>
+                Описание: @project.Description
+            </div>
+            <span class="new blue badge" data-badge-caption="Автор проекта: ">@project.AuthorId</span>
+            </a>
         }
-    </div>
 </div>
+}

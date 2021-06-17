@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ITStep.Planner.Models.Entities.Project>
+﻿@model IEnumerable<ITStep.Planner.Models.Entities.Job>
 
 @{
     ViewData["Title"] = "List of your \"projects\"";
@@ -6,40 +6,30 @@
 
 @if (User.IsInRole("admin"))
 {
-<div class="container">
-    <h1 class="display-4">List of your projects</h1>
-    <div class="list-group">
-        <ul class="collapsible">
-        @foreach (var project in @Model)
-        {
-        <li class="list-project">                 
-            <div asp-controller="Projects" asp-action="Jobs" asp-route-id="@project.Id" 
-            class="list-group-item list-group-item-action collapsible-header">
-            <div class="usestyle">
-                <span class="card-title">Название: @project.Title</span>
-                Описание: @project.Description
-            </div>
-            <span class="new blue badge" data-badge-caption="Автор проекта: ">@project.Author.Email</span>
-            </div>
-             @foreach (var Job in project.Jobs)
-               {
-                <div asp-controller="Projects" asp-action="Jobs" asp-route-id="@project.Id" 
-                    class="list-group-item list-group-item-action collapsible-body ">
-                    <div class="block_task">
-                        <div class="usestyle">
-                            <span class="card-title">Название: @Job.Title</span>
-                            <span class="card-desctiption">Описание: @Job.Description</span>
+    <div class="container">
+        <h1 class="display-4">List of your projects</h1>
+        <div class="list-group">
+            <ul class="collapsible">
+            <li>
+                @foreach (var Job in @Model)
+                {
+                    <div asp-controller="Projects" asp-action="Jobs" asp-route-id="@Job.ProjectId" 
+                        class="list-group-item list-group-item-action">
+                        <div class="block_task">
+                            <div class="usestyle">
+                                <span class="card-title">Название: @Job.Title</span>
+                                <span class="card-desctiption">Описание: @Job.Description</span>
+                            </div>
+                            <div class="info_task">
+                                <span class="new green badge" data-badge-caption="Статус: ">@Job.JobStatus.Title</span>
+                                <span class="new red badge" data-badge-caption="Дедлайн проекта: ">@Job.Deadline</span>
+                            </div>
                         </div>
-                        <div class="info_task">
-                            <span class="new green badge" data-badge-caption="Статус: ">@Job.JobStatus.Title</span>
-                            <span class="new red badge" data-badge-caption="Дедлайн проекта: ">@Job.Deadline</span>
-                        </div>
-                    </div>
-                </div> 
-               }    
-        </li>  
-        }
-        </ul>
+                    </div> 
+                }    
+            </li>  
+            }
+            </ul>
+        </div>
     </div>
-</div>
 }

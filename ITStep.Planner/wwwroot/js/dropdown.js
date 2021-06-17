@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems, options);
+  var elems_down = document.querySelectorAll('.dropdown-trigger');
+  var instances_down = M.Dropdown.init(elems_down, options);
   });
 
-  // Or with jQuery
-
-  $(document).ready(function(){
-    $('.collapsible').collapsible();
+$(document).ready(function(){
+  $('.dropdown-trigger').dropdown();
 });
